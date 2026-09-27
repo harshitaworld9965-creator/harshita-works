@@ -8,14 +8,12 @@ import "./CardGrid.css";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
-const COLUMN_COUNT = 5;
+const COLUMN_COUNT = 3;
 
 const COLUMN_MOTION = [
-  { x: 320, y: 80, speed: 100 },
-  { x: 160, y: 0, speed: 300 },
-  { x: 0, y: 140, speed: 50 },
-  { x: -160, y: 60, speed: 200 },
-  { x: -320, y: 0, speed: 350 },
+  { x: 260, y: 80, speed: 120 },
+  { x: 0, y: 160, speed: 320 },
+  { x: -260, y: 40, speed: 200 },
 ];
 
 export default function CardGrid() {

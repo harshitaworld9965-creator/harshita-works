@@ -35,22 +35,38 @@ export default function Card({ project }) {
   return (
         <a
       href={project.link}
+      target="_blank"
+      rel="noreferrer"
       className="card"
       ref={cardRef}
       onMouseMove={handleMove}
       onMouseLeave={handleLeave}
     >
-      <img src={project.image} alt={project.title} />
+      {project.video ? (
+        <video
+          src={project.video}
+          poster={project.image}
+          autoPlay
+          muted
+          loop
+          playsInline
+          aria-label={project.title}
+        />
+      ) : (
+        <img src={project.image} alt={project.title} />
+      )}
 
       {project.badge && <span className="card-badge">✷ {project.badge}</span>}
 
       <div className="card-info">
         <h3 className="card-title">{project.title}</h3>
-        <ul className="card-stack">
-          {project.stack.map((tech) => (
-            <li key={tech}>{tech}</li>
-          ))}
-        </ul>
+        {project.stack.length > 0 && (
+          <ul className="card-stack">
+            {project.stack.map((tech) => (
+              <li key={tech}>{tech}</li>
+            ))}
+          </ul>
+        )}
       </div>
     </a>
   );
