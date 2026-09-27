@@ -10,11 +10,11 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 const COLUMN_COUNT = 5;
 
 const COLUMN_MOTION = [
-  { x: -240, y: 80, speed: 100 },
-  { x: -120, y: 0, speed: 300 },
+  { x: 320, y: 80, speed: 100 },
+  { x: 160, y: 0, speed: 300 },
   { x: 0, y: 140, speed: 50 },
-  { x: 120, y: 60, speed: 200 },
-  { x: 240, y: 0, speed: 350 },
+  { x: -160, y: 60, speed: 200 },
+  { x: -320, y: 0, speed: 350 },
 ];
 
 export default function CardGrid() {
@@ -44,8 +44,26 @@ export default function CardGrid() {
           column,
           { x, y },
           { x: 0, y: 0, ease: "power2.out", duration: 1 }
-        ).to(column, { y: -speed, ease: "none", duration: 3 })
-        .to(column, {y:0, ease:"power2.inOut", duration:1});
+        )
+          .to(column, { y: -speed, ease: "none", duration: 3 })
+          .to(column, { y: 0, ease: "power2.inOut", duration: 1 });
+      });
+
+      const cardEls = gsap.utils.toArray(".card");
+
+      cardEls.forEach((card) => {
+        gsap.from(card, {
+          rotation: gsap.utils.random(-14, 14),
+          x: gsap.utils.random(-40, 40),
+          y: gsap.utils.random(-30, 30),
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: card,
+            start: "top bottom",
+            end: "top 55%",
+            scrub: true,
+          },
+        });
       });
     },
     { scope: gridRef }
