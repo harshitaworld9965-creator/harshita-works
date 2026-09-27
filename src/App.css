@@ -5,3 +5,9 @@
 .scroll-test p{
   padding: 2rem;
 }
+
+.scroll-test {
+  height: 300vh;
+  position: relative;
+  z-index: 1;
+}

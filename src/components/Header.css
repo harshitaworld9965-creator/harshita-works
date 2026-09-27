@@ -1,0 +1,56 @@
+.logo {
+  position: fixed;
+  top: 2rem;
+  left: 2.5rem;
+  z-index: 10;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 2rem;
+  color: #fff;
+  text-decoration: none;
+  mix-blend-mode: difference;
+}
+
+.nav {
+  position: fixed;
+  top: 2rem;
+  right: 2.5rem;
+  z-index: 10;
+  display: flex;
+  gap: 0.75rem;
+}
+
+.nav-menu,
+.nav-pill {
+  height: 2.75rem;
+  border: none;
+  border-radius: 999px;
+  background: rgba(40, 40, 40, 0.8);
+  backdrop-filter: blur(10px);
+  color: #fff;
+  font: 600 0.875rem var(--sans);
+  cursor: pointer;
+}
+
+.nav-menu {
+  width: 2.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+
+.nav-menu span {
+  width: 14px;
+  height: 2px;
+  background: #fff;
+  border-radius: 2px;
+}
+
+.nav-pill {
+  display: flex;
+  align-items: center;
+  padding: 0 1.5rem;
+  text-decoration: none;
+}
