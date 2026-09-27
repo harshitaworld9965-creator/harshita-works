@@ -44,7 +44,8 @@ export default function CardGrid() {
           column,
           { x, y },
           { x: 0, y: 0, ease: "power2.out", duration: 1 }
-        ).to(column, { y: -speed, ease: "none", duration: 3 });
+        ).to(column, { y: -speed, ease: "none", duration: 3 })
+        .to(column, {y:0, ease:"power2.inOut", duration:1});
       });
     },
     { scope: gridRef }

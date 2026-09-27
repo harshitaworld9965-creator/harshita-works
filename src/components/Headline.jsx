@@ -11,12 +11,12 @@ export default function Headline() {
 
     useGSAP(() => {
         gsap.to(headlineRef.current, {
-            opacity: 0.1,
+            opacity: 0.05,
             ease: "none",
             scrollTrigger: {
                 trigger: headlineRef.current,
                 start: "top top",
-                end: "+=100%",
+                end: "+=60%",
                 scrub: true,
                 pin: true,
                 pinSpacing: false,
