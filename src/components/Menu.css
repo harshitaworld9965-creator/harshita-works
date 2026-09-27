@@ -1,0 +1,46 @@
+.menu {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2.5rem;
+  background: #f2f0eb;
+  color: #000;
+  clip-path: inset(0% 0% 100% 0%);
+}
+
+.menu-links {
+  list-style: none;
+}
+
+.menu-link {
+  display: block;
+  overflow: hidden;
+  color: inherit;
+  text-decoration: none;
+  font-size: clamp(3rem, 10vw, 8rem);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+}
+
+.menu-link-text {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.3em;
+}
+
+.menu-index {
+  font-size: 0.2em;
+  font-weight: 600;
+  letter-spacing: 0;
+  color: #666;
+}
+
+.menu-link:hover .menu-label,
+.menu-link:focus-visible .menu-label {
+  font-family: var(--serif);
+  font-style: italic;
+  letter-spacing: 0;
+}

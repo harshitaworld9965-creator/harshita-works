@@ -33,7 +33,7 @@ export default function Card({ project }) {
   });
 
   return (
-    
+        <a
       href={project.link}
       className="card"
       ref={cardRef}

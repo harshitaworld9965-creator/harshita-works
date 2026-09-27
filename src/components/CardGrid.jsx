@@ -71,7 +71,7 @@ export default function CardGrid() {
   );
 
   return (
-    <section className="card-grid" ref={gridRef}>
+    <section className="card-grid" id="work" ref={gridRef}>
       {columns.map((column, colIndex) => (
         <div className="card-column" key={colIndex}>
           {column.map((project) => (
