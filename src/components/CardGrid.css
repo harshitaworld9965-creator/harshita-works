@@ -41,3 +41,19 @@
   font-size: 0.75rem;
   font-weight: 600;
 }
+.card-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.25rem;
+  margin-top: 6rem;
+  padding: 0 2.5rem 20vh;
+  overflow-x: clip;
+}
+
+.card-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}

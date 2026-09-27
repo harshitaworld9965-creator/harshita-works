@@ -3,6 +3,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { projects } from "../data/projects";
+import Card from "./Card";
 import "./CardGrid.css";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -74,12 +75,7 @@ export default function CardGrid() {
       {columns.map((column, colIndex) => (
         <div className="card-column" key={colIndex}>
           {column.map((project) => (
-            <article className="card" key={project.id}>
-              <img src={project.image} alt={project.title} />
-              {project.badge && (
-                <span className="card-badge">✷ {project.badge}</span>
-              )}
-            </article>
+            <Card project={project} key={project.id} />
           ))}
         </div>
       ))}

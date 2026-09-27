@@ -3,6 +3,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import "./Headline.css";
+import CyclingWord from "./CyclingWord";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -28,8 +29,10 @@ export default function Headline() {
     return (
         <h1 className="headline" ref={headlineRef}>
             Hi, I'm <span className="headline-bold">Harshita</span>, a frontend
-            developer turning designs into{" "}
-            <span className="headline-bracket">⟨</span>interfaces
+            developer turning designs into{" "}<br/>
+            <span className="headline-bracket">⟨</span>
+            <CyclingWord />
+
             <span className="headline-bracket">⟩</span> with motion and{" "}
             <span className="headline-serif">care.</span>
         </h1>
