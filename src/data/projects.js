@@ -47,14 +47,7 @@ export const projects = [
     link: "https://atmosphere-umber.vercel.app/",
     image: "/projects/atmosphere.png",
   },
-  {
-    id: "task-tracker",
-    title: "Task Tracker",
-    badge: null,
-    stack: ["React", "Supabase"],
-    link: "https://va-tasks-nu.vercel.app/",
-    image: "/projects/va-tasks.png",
-  },
+  
   {
     id: "daily-ledger",
     title: "Daily Ledger",
