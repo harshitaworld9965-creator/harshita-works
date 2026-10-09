@@ -10,11 +10,7 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const COLUMN_COUNT = 3;
 
-const COLUMN_MOTION = [
-  { x: 260, y: 80, speed: 120 },
-  { x: 0, y: 160, speed: 320 },
-  { x: -260, y: 40, speed: 200 },
-];
+const COLUMN_SPEEDS = [120, 320, 200];
 
 export default function CardGrid() {
   const gridRef = useRef(null);
@@ -25,45 +21,61 @@ export default function CardGrid() {
 
   useGSAP(
     () => {
-      const columnEls = gsap.utils.toArray(".card-column");
+      const mm = gsap.matchMedia();
 
-      columnEls.forEach((column, i) => {
-        const { x, y, speed } = COLUMN_MOTION[i];
+      mm.add(
+        {
+          isDesktop: "(min-width: 701px)",
+          isMobile: "(max-width: 700px)",
+          reduceMotion: "(prefers-reduced-motion: reduce)",
+        },
+        (context) => {
+          const { isDesktop, reduceMotion } = context.conditions;
+          const grid = gridRef.current;
 
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: gridRef.current,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1,
-          },
-        });
+          if (reduceMotion) return;
 
-        tl.fromTo(
-          column,
-          { x, y },
-          { x: 0, y: 0, ease: "power2.out", duration: 1 }
-        )
-          .to(column, { y: -speed, ease: "none", duration: 3 })
-          .to(column, { y: 0, ease: "power2.inOut", duration: 1 });
-      });
+          // 1. Parallax drift (desktop only)
+          if (isDesktop) {
+            const columnEls = grid.querySelectorAll(".card-column");
 
-      const cardEls = gsap.utils.toArray(".card");
+            columnEls.forEach((column, i) => {
+              const tl = gsap.timeline({
+                scrollTrigger: {
+                  trigger: grid,
+                  start: "top bottom",
+                  end: "bottom top",
+                  scrub: 1,
+                },
+              });
 
-      cardEls.forEach((card) => {
-        gsap.from(card, {
-          rotation: gsap.utils.random(-14, 14),
-          x: gsap.utils.random(-40, 40),
-          y: gsap.utils.random(-30, 30),
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: card,
-            start: "top bottom",
-            end: "top 55%",
-            scrub: true,
-          },
-        });
-      });
+              tl.to(column, {
+                y: -COLUMN_SPEEDS[i],
+                ease: "none",
+                duration: 3,
+              }).to(column, { y: 0, ease: "power2.inOut", duration: 1 });
+            });
+          }
+
+          // 2. Intro: the cards visible on load rise into place
+          const cardEls = grid.querySelectorAll(".card");
+          const visibleCards = Array.from(cardEls).filter(
+            (card) => card.getBoundingClientRect().top < window.innerHeight
+          );
+
+          gsap.from(visibleCards, {
+            yPercent: 40,
+            opacity: 0,
+            duration: 1,
+            delay: 0.5,
+            ease: "power3.out",
+            stagger: 0.08,
+            onComplete: () => ScrollTrigger.refresh(),
+          });
+        }
+      );
+
+      return () => mm.revert();
     },
     { scope: gridRef }
   );
