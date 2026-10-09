@@ -42,17 +42,57 @@ export default function About() {
 
   useGSAP(
     () => {
-      gsap.from(".about-reveal", {
-        y: 40,
-        opacity: 0,
-        duration: 0.9,
-        ease: "power3.out",
-        stagger: 0.1,
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 70%",
-        },
-      });
+      const mm = gsap.matchMedia();
+
+      mm.add(
+        { reduceMotion: "(prefers-reduced-motion: reduce)" },
+        (context) => {
+          const { reduceMotion } = context.conditions;
+          const section = sectionRef.current;
+          const steps = section.querySelectorAll(".about-step");
+          const fill = section.querySelector(".about-line-fill");
+
+          if (reduceMotion) {
+            gsap.set(fill, { scaleY: 1 });
+            steps.forEach((step) => step.classList.add("is-active"));
+            return;
+          }
+
+          gsap.from(section.querySelectorAll(".about-reveal"), {
+            y: 40,
+            opacity: 0,
+            duration: 0.9,
+            ease: "power3.out",
+            stagger: 0.1,
+            scrollTrigger: {
+              trigger: section,
+              start: "top 70%",
+            },
+          });
+
+          gsap.to(fill, {
+            scaleY: 1,
+            ease: "none",
+            scrollTrigger: {
+              trigger: section.querySelector(".about-path-wrap"),
+              start: "top 60%",
+              end: "bottom 60%",
+              scrub: true,
+            },
+          });
+
+          steps.forEach((step) => {
+            ScrollTrigger.create({
+              trigger: step,
+              start: "center 60%",
+              onEnter: () => step.classList.add("is-active"),
+              onLeaveBack: () => step.classList.remove("is-active"),
+            });
+          });
+        }
+      );
+
+      return () => mm.revert();
     },
     { scope: sectionRef }
   );
@@ -86,17 +126,24 @@ export default function About() {
         </div>
 
         <div className="about-side">
-          <ol className="about-path">
-            {PATH.map((step) => (
-              <li className="about-reveal" key={step.year}>
-                <span className="about-year">{step.year}</span>
-                <span>
-                  {step.title}
-                  <span className="about-place">{step.place}</span>
-                </span>
-              </li>
-            ))}
-          </ol>
+          <div className="about-path-wrap">
+            <span className="about-line" aria-hidden="true">
+              <span className="about-line-fill"></span>
+            </span>
+
+            <ol className="about-path">
+              {PATH.map((step) => (
+                <li className="about-step" key={step.year}>
+                  <span className="about-dot" aria-hidden="true"></span>
+                  <span className="about-year">{step.year}</span>
+                  <span>
+                    {step.title}
+                    <span className="about-place">{step.place}</span>
+                  </span>
+                </li>
+              ))}
+            </ol>
+          </div>
 
           <ul className="about-stack about-reveal">
             {STACK.map((tech) => (
