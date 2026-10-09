@@ -45,7 +45,10 @@ export default function About() {
       const mm = gsap.matchMedia();
 
       mm.add(
-        { reduceMotion: "(prefers-reduced-motion: reduce)" },
+        {
+          reduceMotion: "(prefers-reduced-motion: reduce)",
+          okMotion: "(prefers-reduced-motion: no-preference)",
+        },
         (context) => {
           const { reduceMotion } = context.conditions;
           const section = sectionRef.current;
