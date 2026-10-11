@@ -1,5 +1,13 @@
 export const projects = [
   {
+    id: "journey",
+    title: "Maths → Law → Interfaces",
+    badge: "Story",
+    stack: ["React", "CSS", "GSAP"],
+    link: "https://harshita-journey.vercel.app/",
+    image: "/projects/journey.png",
+  },
+  {
     id: "jelly-creature",
     title: "Jelly Creature",
     badge: "Experiment",

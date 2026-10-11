@@ -4,13 +4,18 @@ import { useGSAP } from "@gsap/react";
 import "./CyclingWord.css";
 
 const WORDS = ["interfaces", "interactions", "experiments", "experiences"];
+const START_DELAY = 2500;
+const INTERVAL = 2500;
 
 export default function CyclingWord() {
   const [index, setIndex] = useState(0);
   const wordRef = useRef(null);
+  const hasCycled = useRef(false);
 
   useGSAP(
     () => {
+      if (!hasCycled.current) return;
+
       gsap.from(".cycle-letter", {
         yPercent: 100,
         stagger: 0.03,
@@ -22,17 +27,32 @@ export default function CyclingWord() {
   );
 
   useEffect(() => {
-    const timer = setInterval(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    let timer;
+
+    const cycle = () => {
       gsap.to(wordRef.current.querySelectorAll(".cycle-letter"), {
         yPercent: -100,
         stagger: 0.02,
         duration: 0.35,
         ease: "power2.in",
-        onComplete: () => setIndex((i) => (i + 1) % WORDS.length),
+        onComplete: () => {
+          hasCycled.current = true;
+          setIndex((i) => (i + 1) % WORDS.length);
+        },
       });
-    }, 2500);
+    };
 
-    return () => clearInterval(timer);
+    const startTimer = setTimeout(() => {
+      cycle();
+      timer = setInterval(cycle, INTERVAL);
+    }, START_DELAY);
+
+    return () => {
+      clearTimeout(startTimer);
+      clearInterval(timer);
+    };
   }, []);
 
   return (
